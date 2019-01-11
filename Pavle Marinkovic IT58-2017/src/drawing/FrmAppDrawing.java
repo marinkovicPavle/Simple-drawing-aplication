@@ -62,7 +62,7 @@ public class FrmAppDrawing extends JFrame {
 	private JLabel lblNewLabel_1;
 	public JLabel lblNewLabel;
 	//
-
+//
 	public int getX() {
 		return x;
 	}
