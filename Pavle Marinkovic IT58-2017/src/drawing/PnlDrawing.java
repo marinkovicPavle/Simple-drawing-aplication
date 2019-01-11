@@ -30,7 +30,7 @@ public class PnlDrawing extends JPanel {
 		this.y1=y1;
 		this.oblik=oblik;
 	}
-	
+	//
 	/*public void paint(Graphics g, String oblik, int x, int y,int x1,int y1) {
 		FrmAppDrawing d = new FrmAppDrawing();
 		if(oblik.equals("tacka")) {
