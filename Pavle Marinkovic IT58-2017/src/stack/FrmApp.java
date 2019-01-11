@@ -57,16 +57,12 @@ public class FrmApp extends JFrame {
 				DlgDodaj d = new DlgDodaj();
 				d.setVisible(true);
 				if(d.isOK()) {
-					if(d.getTxtX().getText().isEmpty() || d.getTxtY().getText().isEmpty() || d.getTxtSirina().getText().isEmpty() || d.getTxtVisina().getText().isEmpty()) {
-						JOptionPane.showMessageDialog(null, "Morate popuniti sva polja!","Greska", JOptionPane.WARNING_MESSAGE);
-					}else {
 					try {
-					Point p = new Point(Integer.parseInt(d.getTxtX().getText()),Integer.parseInt(d.getTxtY().getText()));
-					Rectangle r = new Rectangle(p,Integer.parseInt(d.getTxtVisina().getText()),Integer.parseInt(d.getTxtSirina().getText()));
-					dlm.add(0,r);
-					}catch(NumberFormatException ex) {
+						Point p = new Point(Integer.parseInt(d.getTxtX().getText()),Integer.parseInt(d.getTxtY().getText()));
+						Rectangle r = new Rectangle(p,Integer.parseInt(d.getTxtVisina().getText()),Integer.parseInt(d.getTxtSirina().getText()));
+						dlm.add(0,r);
+					} catch(NumberFormatException ex) {
 						JOptionPane.showMessageDialog(null, "Unesite iskljucivo brojeve!","Greska", JOptionPane.WARNING_MESSAGE);
-						}
 					}
 				}
 				d.getTxtX().setText("");
