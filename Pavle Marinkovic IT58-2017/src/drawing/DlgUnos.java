@@ -142,7 +142,7 @@ public class DlgUnos extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						FrmAppDrawing f = new FrmAppDrawing();
+						/*FrmAppDrawing f = new FrmAppDrawing();
 						if(f.getIsKrug()) {
 							if (txtUnos.getText().isEmpty()) {
 								isOK = false;
@@ -153,7 +153,7 @@ public class DlgUnos extends JDialog {
 								isOK = true;
 								dispose();
 							}
-						} else {
+						} else {*/
 						if (txtUnos.getText().isEmpty() || txtUnos1.getText().isEmpty()) {
 							isOK = false;
 							setVisible(true);
@@ -162,7 +162,6 @@ public class DlgUnos extends JDialog {
 							isOK = true;
 							dispose();
 						}
-					}
 					}
 				});
 				okButton.setActionCommand("OK");
