@@ -37,6 +37,8 @@ import java.awt.Component;
 
 public class FrmAppDrawing extends JFrame {
 
+	private static FrmAppDrawing frame;
+	
 	private JPanel contentPane;
 	private JToggleButton tglbtnTacka;
 	private JToggleButton tglbtnLinija;
@@ -132,7 +134,7 @@ public class FrmAppDrawing extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FrmAppDrawing frame = new FrmAppDrawing();
+					frame = new FrmAppDrawing();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -145,6 +147,32 @@ public class FrmAppDrawing extends JFrame {
 	 * Create the frame.
 	 */
 	int brojac = 0;
+
+	
+	
+	@Override
+	public void paint(Graphics g) { //RESAVA PROBLEM POSLE RESAJZOVANJA
+		// TODO Auto-generated method stub
+		super.paint(g);
+		for (Object o : lista) {
+			if (o instanceof Point) {
+				Point p = (Point) o;
+				p.draw(g);
+			} else if (o instanceof Line) {
+				Line l = (Line) o;
+				l.draw(g);
+			} else if (o instanceof Rectangle) {
+				Rectangle r = (Rectangle) o;
+				r.draw(g);
+			} else if (o instanceof Circle) {
+				Circle c = (Circle) o;
+				c.draw(g);
+			} else if (o instanceof Donut) {
+				Donut krugSaRupom = (Donut) o;
+				krugSaRupom.draw(g);
+			}
+		}
+	}
 
 	public FrmAppDrawing() {
 		setTitle("Crtanje Aplikacija");
@@ -265,12 +293,14 @@ public class FrmAppDrawing extends JFrame {
 							if (c.contains(e.getX(), e.getY())) {
 								lblNewLabel.setText("DA");
 								c.setSelected(true);
+								//c.draw(g);
 							}
 						} else if (o instanceof Donut) {
 							Donut krugSaRupom = (Donut) o;
 							if (krugSaRupom.contains(e.getX(), e.getY())) {
 								lblNewLabel.setText("DA");
 								krugSaRupom.setSelected(true);
+								//krugSaRupom.draw(g);
 							}
 						}
 					}
@@ -288,7 +318,7 @@ public class FrmAppDrawing extends JFrame {
 				 */
 			}
 		});
-
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 540, 333);
 		contentPane = new JPanel();
