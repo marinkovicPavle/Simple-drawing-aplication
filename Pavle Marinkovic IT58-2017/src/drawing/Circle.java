@@ -7,6 +7,7 @@ public class Circle extends Shape {
 
 	private Point center;
 	private int radius;
+	private Color color;
 	
 	public Circle() {
 
@@ -24,10 +25,10 @@ public class Circle extends Shape {
 
 	@Override
 	public void draw(Graphics g) {
+		g.setColor(getColor());
 		g.drawOval(this.getCenter().getX() - this.radius, getCenter().getY() - getRadius(), this.getRadius()*2, this.getRadius()*2);
 		
 		if (isSelected()) {
-			g.setColor(Color.BLUE);
 			g.drawRect(getCenter().getX() - 3, getCenter().getY() - 3, 6, 6);
 			g.drawRect(getCenter().getX() + getRadius() - 3, getCenter().getY() - 3, 6, 6);
 			g.drawRect(getCenter().getX() - getRadius() - 3, getCenter().getY() - 3, 6, 6);
@@ -69,6 +70,14 @@ public class Circle extends Shape {
 		} else {
 			return false;
 		}
+	}
+	
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
 	}
 	
 	public double area() {

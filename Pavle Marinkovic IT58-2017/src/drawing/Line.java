@@ -7,6 +7,7 @@ public class Line extends Shape {
 
 	private Point startPoint;
 	private Point endPoint;
+	private Color color;
 	
 	public Line() {
 		
@@ -24,6 +25,7 @@ public class Line extends Shape {
 
 	@Override
 	public void draw(Graphics g) {
+		g.setColor(getColor());
 		g.drawLine(this.getStartPoint().getX(), getStartPoint().getY(), this.getEndPoint().getX(), this.getEndPoint().getY());
 		
 		if (isSelected()) {
@@ -72,6 +74,14 @@ public class Line extends Shape {
 		} else {
 			return false;
 		}
+	}
+	
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
 	}
 	
 	public double length() {

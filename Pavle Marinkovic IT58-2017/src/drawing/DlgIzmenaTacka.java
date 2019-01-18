@@ -1,32 +1,57 @@
 package drawing;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import net.miginfocom.swing.MigLayout;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Dialog.ModalityType;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
-public class DlgUnos extends JDialog {
+public class DlgIzmenaTacka extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField txtUnos;
-	private JTextField txtUnos1;
-	private JLabel lblUnesite;
-	private JLabel lblUnesite1;
-	
+	private JTextField txtY;
+	private JTextField txtX;
 	private boolean isOK;
 	
+	private Color c;
+	
+	public Color getC() {
+		return c;
+	}
+
+	public void setC(Color c) {
+		this.c = c;
+	}
+	
+	public JTextField getTxtY() {
+		return txtY;
+	}
+
+	public void setTxtY(JTextField txtY) {
+		this.txtY = txtY;
+	}
+
+	public JTextField getTxtX() {
+		return txtX;
+	}
+
+	public void setTxtX(JTextField txtX) {
+		this.txtX = txtX;
+	}
+
 	public boolean isOK() {
 		return isOK;
 	}
@@ -35,44 +60,12 @@ public class DlgUnos extends JDialog {
 		this.isOK = isOK;
 	}
 
-	public JTextField getTxtUnos() {
-		return txtUnos;
-	}
-
-	public void setTxtUnos(JTextField txtUnos) {
-		this.txtUnos = txtUnos;
-	}
-
-	public JTextField getTxtUnos1() {
-		return txtUnos1;
-	}
-
-	public void setTxtUnos1(JTextField txtUnos1) {
-		this.txtUnos1 = txtUnos1;
-	}
-
-	public JLabel getLblUnesite() {
-		return lblUnesite;
-	}
-
-	public void setLblUnesite(JLabel lblUnesite) {
-		this.lblUnesite = lblUnesite;
-	}
-
-	public JLabel getLblUnesite1() {
-		return lblUnesite1;
-	}
-
-	public void setLblUnesite1(JLabel lblUnesite1) {
-		this.lblUnesite1 = lblUnesite1;
-	}
-
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			DlgUnos dialog = new DlgUnos();
+			DlgIzmenaTacka dialog = new DlgIzmenaTacka();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -83,21 +76,22 @@ public class DlgUnos extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public DlgUnos() {
+	public DlgIzmenaTacka() {
+		setTitle("Tacka");
 		setModalityType(ModalityType.APPLICATION_MODAL);
-		setBounds(100, 100, 234, 219);
+		setBounds(100, 100, 288, 178);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(new MigLayout("", "[][grow]", "[][][][]"));
+		contentPanel.setLayout(new MigLayout("", "[30px][214px]", "[20px][20px][25]"));
 		{
-			lblUnesite = new JLabel("Unesite sirinu:");
-			contentPanel.add(lblUnesite, "cell 0 0,alignx trailing");
+			JLabel label = new JLabel("Y:");
+			contentPanel.add(label, "flowy,cell 0 1,alignx left,aligny center");
 		}
 		{
-			txtUnos = new JTextField();
-			txtUnos.setTransferHandler(null); //da bismo zabranili pastovanje u textfield, da ne bi korisnik kopirao neki string
-			txtUnos.addKeyListener(new KeyAdapter() {
+			txtY = new JTextField();
+			txtY.setTransferHandler(null); //da bismo zabranili pastovanje u textfield, da ne bi korisnik kopirao neki string
+			txtY.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyTyped(KeyEvent e) {
 					char c = e.getKeyChar();
@@ -109,17 +103,13 @@ public class DlgUnos extends JDialog {
 					}
 				}
 			});
-			contentPanel.add(txtUnos, "cell 1 0,alignx left");
-			txtUnos.setColumns(10);
+			txtY.setColumns(10);
+			contentPanel.add(txtY, "cell 1 1,growx,aligny top");
 		}
 		{
-			lblUnesite1 = new JLabel("Unesite visinu:");
-			contentPanel.add(lblUnesite1, "cell 0 3,alignx trailing");
-		}
-		{
-			txtUnos1 = new JTextField();
-			txtUnos1.setTransferHandler(null); //da bismo zabranili pastovanje u textfield, da ne bi korisnik kopirao neki string
-			txtUnos1.addKeyListener(new KeyAdapter() {
+			txtX = new JTextField();
+			txtX.setTransferHandler(null); //da bismo zabranili pastovanje u textfield, da ne bi korisnik kopirao neki string
+			txtX.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyTyped(KeyEvent e) {
 					char c = e.getKeyChar();
@@ -131,8 +121,25 @@ public class DlgUnos extends JDialog {
 					}
 				}
 			});
-			contentPanel.add(txtUnos1, "cell 1 3,alignx left");
-			txtUnos1.setColumns(10);
+			txtX.setColumns(10);
+			contentPanel.add(txtX, "cell 1 0,growx,aligny top");
+		}
+		{
+			JLabel label = new JLabel("X:");
+			contentPanel.add(label, "cell 0 0,alignx left,aligny center");
+		}
+		{
+			JLabel lblIzaberiBoju = new JLabel("Izaberi boju:");
+			contentPanel.add(lblIzaberiBoju, "cell 0 2");
+		}
+		{
+			JButton btnBoja = new JButton("Boja");
+			btnBoja.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					c = JColorChooser.showDialog(null, "Izaberite boju", Color.RED);
+				}
+			});
+			contentPanel.add(btnBoja, "cell 1 2,growx");
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -141,8 +148,8 @@ public class DlgUnos extends JDialog {
 			{
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						if (txtUnos.getText().isEmpty() || txtUnos1.getText().isEmpty()) {
+					public void actionPerformed(ActionEvent e) {
+						if (txtX.getText().isEmpty() || txtY.getText().isEmpty()) {
 							isOK = false;
 							setVisible(true);
 							JOptionPane.showMessageDialog(null, "Morate popuniti sva polja!","Greska", JOptionPane.WARNING_MESSAGE);

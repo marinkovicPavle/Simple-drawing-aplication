@@ -8,6 +8,7 @@ public class Rectangle extends Shape {
 	private Point upperLeftPoint;
 	private int width;
 	private int height;
+	private Color color;
 	
 	public Rectangle() {
 
@@ -26,6 +27,7 @@ public class Rectangle extends Shape {
 
 	@Override
 	public void draw(Graphics g) {
+		g.setColor(getColor());
 		g.drawRect(this.getUpperLeftPoint().getX(), this.getUpperLeftPoint().getY(), this.getWidth(), this.height);
 		
 		if (isSelected()) {
@@ -36,7 +38,7 @@ public class Rectangle extends Shape {
 			g.drawRect(this.getUpperLeftPoint().getX() + getWidth() - 3, this.getUpperLeftPoint().getY() + getHeight() - 3, 6, 6);
 		}
 	}
-
+	
 	@Override
 	public void moveBy(int byX, int byY) {
 		upperLeftPoint.moveBy(byX, byY);
@@ -85,6 +87,14 @@ public class Rectangle extends Shape {
 		} else {
 			return false;
 		}
+	}
+	
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
 	}
 	
 	public int area() {

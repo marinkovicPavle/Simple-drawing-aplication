@@ -1,135 +1,138 @@
 package drawing;
 
-import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Iterator;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JToggleButton;
 
-import drawing.Point;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JLabel;
 
 public class PnlDrawing extends JPanel {
-	private int x,y,x1,y1;
-	private String oblik;
+
+	private DrawingApp frame;
+	private ArrayList<Shape> shapes = new ArrayList<Shape>();
+	private Point startPoint;
+	private Shape selected;
 	
-	private ArrayList<Object> lista = new ArrayList<>();
-	
-	private Point p;
-	private Line l;
-	private Rectangle r;
-	private Circle c;
-	private Donut krugSaRupom;
-	
-	public ArrayList<Object> getLista() {
-		return lista;
+	public PnlDrawing(DrawingApp frame) {
+		this.frame = frame;
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				pritisakMisa(arg0);
+			}
+		});
+
 	}
 
-	public void setLista(ArrayList<Object> lista) {
-		this.lista = lista;
-	}
-
-	/*PnlDrawing(int x, int y, String oblik){
-		this.x=x;
-		this.y=y;
-		this.oblik=oblik;
-	}
-	
-	PnlDrawing(int x, int y, int x1, String oblik){
-		this.x=x;
-		this.y=y;
-		this.x1=x1;
-		this.oblik=oblik;
-	}
-	
-	PnlDrawing(int x, int y, int x1, int y1, String oblik){
-		this.x=x;
-		this.y=y;
-		this.x1=x1;
-		this.y1=y1;
-		this.oblik=oblik;
-	}*/
-	
-	PnlDrawing(Point p, String oblik){
-		this.p=p;
-		this.oblik=oblik;
-	}
-	
-	PnlDrawing(Line l, String oblik){
-		this.l=l;
-		this.oblik=oblik;
-	}
-	
-	PnlDrawing(Rectangle r, String oblik){
-		this.r=r;
-		this.oblik=oblik;
-	}
-	
-	PnlDrawing(Circle c, String oblik){
-		this.c=c;
-		this.oblik=oblik;
-	}
-	
-	PnlDrawing(Donut krugSaRupom, String oblik){
-		this.krugSaRupom=krugSaRupom;
-		this.oblik=oblik;
-	}
-	
-	PnlDrawing(){
-	}
-	//
-	/*public void paint(Graphics g, String oblik, int x, int y,int x1,int y1) {
-		FrmAppDrawing d = new FrmAppDrawing();
-		if(oblik.equals("tacka")) {
-			Point p = new Point(x,y,false);
-			p.draw(g);
-		} else if(oblik.equals("linija")) {
-			Point p = new Point(x,y);
-			Point p1 = new Point(x1,y1);
-			Line l = new Line(p,p1);
-			l.draw(g);
-		} else if(oblik.equals("pravougaonik")) {
-			Point p = new Point(x,y);
-			Rectangle r = new Rectangle(p,y1,x1);
-			r.draw(g);
-		} else if(oblik.equals("krug")) {
-			Point p = new Point(x,y);
-			Circle c = new Circle(p, x1);
-			c.draw(g);
-		} else if(oblik.equals("krugsarupom")) {
-			Point p = new Point(x,y);
-			Donut krugsarupom = new Donut(p, x1,y1);
-			krugsarupom.draw(g);
+	protected void pritisakMisa(MouseEvent e) {
+		Shape newShape = null;
+		int x1 = 0;
+		int y1 = 0;
+		if (frame.getTglbtnSelektuj().isSelected()) {
+			selected = null;
+			Iterator<Shape> it = shapes.iterator();
+			while (it.hasNext()) {
+				Shape shape = it.next();
+				shape.setSelected(false);
+				if (shape.contains(e.getX(), e.getY())) {
+					selected = shape;
+				}
+			}
+			if (selected != null) {
+				selected.setSelected(true);
+			}
+		} else if (frame.getTglbtnTacka().isSelected()) {
+			Point p = new Point(e.getX(),e.getY(),false);
+			p.setColor(Color.BLACK);
+			newShape = p;
+		} else if (frame.getTglbtnLinija().isSelected()) {
+			if (startPoint == null) {
+				startPoint = new Point(e.getX(), e.getY());
+			} else {
+				Point endPoint = new Point(e.getX(), e.getY());
+				Line l = new Line(startPoint,endPoint,false);
+				l.setColor(Color.BLACK);
+				newShape = l;
+				startPoint = null;
+			}
+		} else if (frame.getTglbtnPravougaonik().isSelected()) {
+			DlgUnos unos = new DlgUnos();
+			unos.pack();
+			unos.setTitle("Pravougaonik");
+			unos.setVisible(true);
+			if (unos.isOK()) {
+				x1 = Integer.parseInt(unos.getTxtUnos().getText());
+				y1 = Integer.parseInt(unos.getTxtUnos1().getText());
+			}
+			Rectangle r = new Rectangle(new Point(e.getX(), e.getY()), y1, x1,false);
+			r.setColor(Color.BLACK);
+			try {
+				newShape = r;
+			} catch (Exception ex) {
+				JOptionPane.showMessageDialog(frame, "Pogresan unos!", "Greska", JOptionPane.ERROR_MESSAGE);
+			}
+		} else if (frame.getTglbtnKrug().isSelected()) {
+			DlgUnosKrug unos = new DlgUnosKrug();
+			unos.pack();
+			unos.setVisible(true);
+			if (unos.isOK()) {
+				x1 = Integer.parseInt(unos.getTxtPoluprecnik().getText());
+			}
+			Circle c = new Circle(new Point(e.getX(), e.getY()), x1,false);
+			c.setColor(Color.BLACK);
+			try {
+				newShape = c;
+			} catch (Exception ex) {
+				JOptionPane.showMessageDialog(frame, "Pogresan unos!", "Greska", JOptionPane.ERROR_MESSAGE);
+			}
+		} else if (frame.getTglbtnKrugSaRupom().isSelected()) {
+			DlgUnos unos = new DlgUnos();
+			unos.getLblUnesite().setText("Unesite poluprecnik spoljasnjeg kruga:");
+			unos.getLblUnesite1().setText("Unesite poluprecnik unutrasnjeg kruga:");
+			unos.setTitle("Krug sa rupom");
+			unos.pack();
+			unos.setVisible(true);
+			if (unos.isOK()) {
+				x1 = Integer.parseInt(unos.getTxtUnos().getText());
+				y1 = Integer.parseInt(unos.getTxtUnos1().getText());
+			}
+			Donut d = new Donut(new Point(e.getX(), e.getY()), x1, y1,false);
+			d.setColor(Color.BLACK);
+			try {
+				newShape = d;
+			} catch (Exception ex) {
+				JOptionPane.showMessageDialog(frame, "Pogresan unos!", "Greska", JOptionPane.ERROR_MESSAGE);
+			}
 		}
-	}*/
-	
-	@Override
+		if (newShape != null) {
+			shapes.add(newShape);
+		}
+		repaint();
+	}
+
 	public void paint(Graphics g) {
-		FrmAppDrawing f = new FrmAppDrawing();
-		if(oblik.equals("tacka")) {
-			//Point p = new Point(x,y,false);
-			lista.add(p);
-			p.draw(g);
-		} else if(oblik.equals("linija")) {
-			/*Point p = new Point(x,y);
-			Point p1 = new Point(x1,y1);
-			Line l = new Line(p,p1,false);*/
-			lista.add(l);
-			l.draw(g);
-		} else if(oblik.equals("pravougaonik")) {
-			/*Point p = new Point(x,y);
-			Rectangle r = new Rectangle(p,y1,x1,false);*/
-			r.draw(g);
-		} else if(oblik.equals("krug")) {
-			/*Point p = new Point(x,y);
-			Circle c = new Circle(p, x1);*/
-			lista.add(c);
-			c.draw(g);
-		} else if(oblik.equals("krugsarupom")) {
-			/*Point p = new Point(x,y);
-			Donut krugsarupom = new Donut(p, x1, y1, false);*/
-			lista.add(krugSaRupom);
-			krugSaRupom.draw(g);
+		super.paint(g);
+		Iterator<Shape> it = shapes.iterator();
+		while (it.hasNext()) {
+			it.next().draw(g);
 		}
+	}
 
+	public Shape getSelected() {
+		return selected;
+	}
+	
+	public void setSelected(Shape selected) {
+		this.selected = selected;
+	}
+
+	public ArrayList<Shape> getShapes() {
+		return shapes;
 	}
 }

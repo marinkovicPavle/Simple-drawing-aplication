@@ -7,6 +7,7 @@ public class Point extends Shape {
 
 	private int x;
 	private int y;
+	private Color color;
 	
 	public Point() {
 		
@@ -24,6 +25,7 @@ public class Point extends Shape {
 
 	@Override
 	public void draw(Graphics g) {
+		g.setColor(getColor());
 		g.drawLine(this.x-2, this.y, this.x+2, y);
 		g.drawLine(x, this.y-2, x, this.y+2);
 		
@@ -71,6 +73,14 @@ public class Point extends Shape {
 		double dy = this.y - y2;
 		double d = Math.sqrt(dx*dx + dy*dy);
 		return d;
+	}
+	
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
 	}
 	
 	public int getX() {
