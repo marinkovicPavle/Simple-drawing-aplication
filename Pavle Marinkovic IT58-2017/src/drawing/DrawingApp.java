@@ -15,24 +15,25 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class DrawingApp extends JFrame {
 
 	private JPanel contentPane;
 
 	private PnlDrawing panelCrtanje = new PnlDrawing(this);
-	
+
 	private final ButtonGroup buttonGroup = new ButtonGroup();
-	
+
 	private JToggleButton tglbtnSelektuj;
-	private JToggleButton tglbtnTacka,tglbtnLinija,tglbtnPravougaonik,tglbtnKrug,tglbtnKrugSaRupom;
-	
-	private JPanel pnlSelekcija,pnlCrtanje;
+	private JToggleButton tglbtnTacka, tglbtnLinija, tglbtnPravougaonik, tglbtnKrug, tglbtnKrugSaRupom;
+
+	private JPanel pnlSelekcija, pnlCrtanje;
 	private JButton btnObrisi;
-	
+
 	private boolean cekiranTacka, cekiranLinija, cekiranPravougaonik, cekiranKrug, cekiranKrugSaRupom, cekiranSelektuj;
 	private JButton btnModifikuj;
-	
+
 	public JToggleButton getTglbtnSelektuj() {
 		return tglbtnSelektuj;
 	}
@@ -82,16 +83,16 @@ public class DrawingApp extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		//EventQueue.invokeLater(new Runnable() {
-			//public void run() {
-				//try {
-					DrawingApp frame = new DrawingApp();
-					frame.setVisible(true);
-				//} catch (Exception e) {
-				//	e.printStackTrace();
-				//}
-			//}
-		//});
+		// EventQueue.invokeLater(new Runnable() {
+		// public void run() {
+		// try {
+		DrawingApp frame = new DrawingApp();
+		frame.setVisible(true);
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
+		// }
+		// });
 	}
 
 	/**
@@ -105,12 +106,12 @@ public class DrawingApp extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		
+
 		contentPane.add(panelCrtanje);
-		
+
 		pnlSelekcija = new JPanel();
 		contentPane.add(pnlSelekcija, BorderLayout.SOUTH);
-		
+
 		tglbtnSelektuj = new JToggleButton("Selektuj");
 		tglbtnSelektuj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -129,14 +130,14 @@ public class DrawingApp extends JFrame {
 		});
 		pnlSelekcija.add(tglbtnSelektuj);
 		buttonGroup.add(tglbtnSelektuj);
-		
+
 		btnObrisi = new JButton("Obrisi");
 		btnObrisi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				brisi();
 			}
 		});
-		
+
 		btnModifikuj = new JButton("Modifikuj");
 		btnModifikuj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -145,10 +146,10 @@ public class DrawingApp extends JFrame {
 		});
 		pnlSelekcija.add(btnModifikuj);
 		pnlSelekcija.add(btnObrisi);
-		
+
 		pnlCrtanje = new JPanel();
 		contentPane.add(pnlCrtanje, BorderLayout.NORTH);
-		
+
 		tglbtnTacka = new JToggleButton("Tacka");
 		tglbtnTacka.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -167,7 +168,7 @@ public class DrawingApp extends JFrame {
 		});
 		buttonGroup.add(tglbtnTacka);
 		pnlCrtanje.add(tglbtnTacka);
-		
+
 		tglbtnLinija = new JToggleButton("Linija");
 		tglbtnLinija.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -186,7 +187,7 @@ public class DrawingApp extends JFrame {
 		});
 		buttonGroup.add(tglbtnLinija);
 		pnlCrtanje.add(tglbtnLinija);
-		
+
 		tglbtnPravougaonik = new JToggleButton("Pravougaonik");
 		tglbtnPravougaonik.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -205,7 +206,7 @@ public class DrawingApp extends JFrame {
 		});
 		buttonGroup.add(tglbtnPravougaonik);
 		pnlCrtanje.add(tglbtnPravougaonik);
-		
+
 		tglbtnKrug = new JToggleButton("Krug");
 		tglbtnKrug.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -224,7 +225,7 @@ public class DrawingApp extends JFrame {
 		});
 		buttonGroup.add(tglbtnKrug);
 		pnlCrtanje.add(tglbtnKrug);
-		
+
 		tglbtnKrugSaRupom = new JToggleButton("Krug sa rupom");
 		tglbtnKrugSaRupom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -243,32 +244,36 @@ public class DrawingApp extends JFrame {
 		});
 		buttonGroup.add(tglbtnKrugSaRupom);
 		pnlCrtanje.add(tglbtnKrugSaRupom);
-		
+
 	}
 
 	protected void brisi() {
 		Shape selected = panelCrtanje.getSelected();
-		if(selected != null) {
-			panelCrtanje.getShapes().remove(selected);
+		if (selected != null) {
+			int selectedOption = JOptionPane.showConfirmDialog(null, "Da li ste sigurni?", "Obavestenje",
+					JOptionPane.YES_NO_OPTION);
+			if (selectedOption == JOptionPane.YES_OPTION) {
+				panelCrtanje.getShapes().remove(selected);
+			}
 		}
 		panelCrtanje.repaint();
 	}
-	
+
 	protected void modifikuj() {
-		int korX=0,korY=0, x1=0,y1=0;
+		int korX = 0, korY = 0, x1 = 0, y1 = 0;
 		Shape selected = panelCrtanje.getSelected();
-		if(selected != null) {
-			if(selected instanceof Point) {
+		if (selected != null) {
+			if (selected instanceof Point) {
 				Point p = (Point) selected;
 				DlgIzmenaTacka izmena = new DlgIzmenaTacka();
-				izmena.getTxtX().setText(""+p.getX());
-				izmena.getTxtY().setText(""+p.getY());
+				izmena.getTxtX().setText("" + p.getX());
+				izmena.getTxtY().setText("" + p.getY());
 				izmena.pack();
 				izmena.setVisible(true);
 				if (izmena.isOK()) {
 					korX = Integer.parseInt(izmena.getTxtX().getText());
 					korY = Integer.parseInt(izmena.getTxtY().getText());
-					p = new Point(korX,korY);
+					p = new Point(korX, korY);
 					p.setColor(izmena.getC());
 					panelCrtanje.getShapes().set(panelCrtanje.getShapes().indexOf(selected), p);
 				}
@@ -280,10 +285,10 @@ public class DrawingApp extends JFrame {
 				izmena.getLblY().setText("Unesite Y koordinatu pocetne tacke:");
 				izmena.getLblUnesite().setText("Unesite X koordinatu krajnje tacke:");
 				izmena.getLblUnesite1().setText("Unesite Y koordinatu krajnje tacke:");
-				izmena.getTxtX().setText(""+l.getStartPoint().getX());
-				izmena.getTxtY().setText(""+l.getStartPoint().getY());
-				izmena.getTxtUnos().setText(""+l.getEndPoint().getX());
-				izmena.getTxtUnos1().setText(""+l.getEndPoint().getY());
+				izmena.getTxtX().setText("" + l.getStartPoint().getX());
+				izmena.getTxtY().setText("" + l.getStartPoint().getY());
+				izmena.getTxtUnos().setText("" + l.getEndPoint().getX());
+				izmena.getTxtUnos1().setText("" + l.getEndPoint().getY());
 				izmena.pack();
 				izmena.setVisible(true);
 				if (izmena.isOK()) {
@@ -291,7 +296,7 @@ public class DrawingApp extends JFrame {
 					korY = Integer.parseInt(izmena.getTxtY().getText());
 					x1 = Integer.parseInt(izmena.getTxtUnos().getText());
 					y1 = Integer.parseInt(izmena.getTxtUnos1().getText());
-					l = new Line(new Point(korX,korY), new Point(x1,y1));
+					l = new Line(new Point(korX, korY), new Point(x1, y1));
 					l.setColor(izmena.getC());
 					panelCrtanje.getShapes().set(panelCrtanje.getShapes().indexOf(selected), l);
 				}
@@ -299,10 +304,10 @@ public class DrawingApp extends JFrame {
 				Rectangle r = (Rectangle) selected;
 				DlgIzmena izmena = new DlgIzmena();
 				izmena.setTitle("Pravougaonik");
-				izmena.getTxtX().setText(""+r.getUpperLeftPoint().getX());
-				izmena.getTxtY().setText(""+r.getUpperLeftPoint().getY());
-				izmena.getTxtUnos().setText(""+r.getHeight());
-				izmena.getTxtUnos1().setText(""+r.getWidth());
+				izmena.getTxtX().setText("" + r.getUpperLeftPoint().getX());
+				izmena.getTxtY().setText("" + r.getUpperLeftPoint().getY());
+				izmena.getTxtUnos().setText("" + r.getHeight());
+				izmena.getTxtUnos1().setText("" + r.getWidth());
 				izmena.pack();
 				izmena.setVisible(true);
 				if (izmena.isOK()) {
@@ -310,7 +315,7 @@ public class DrawingApp extends JFrame {
 					korY = Integer.parseInt(izmena.getTxtY().getText());
 					x1 = Integer.parseInt(izmena.getTxtUnos().getText());
 					y1 = Integer.parseInt(izmena.getTxtUnos1().getText());
-					r = new Rectangle(new Point(korX,korY),x1,y1);
+					r = new Rectangle(new Point(korX, korY), x1, y1);
 					r.setColor(izmena.getC());
 					panelCrtanje.getShapes().set(panelCrtanje.getShapes().indexOf(selected), r);
 				}
@@ -320,10 +325,10 @@ public class DrawingApp extends JFrame {
 				izmena.getLblUnesite().setText("Unesite poluprecnik spoljasnjeg kruga:");
 				izmena.getLblUnesite1().setText("Unesite poluprecnik unutrasnjeg kruga:");
 				izmena.setTitle("Krug sa rupom");
-				izmena.getTxtX().setText(""+d.getCenter().getX());
-				izmena.getTxtY().setText(""+d.getCenter().getY());
-				izmena.getTxtUnos().setText(""+d.getRadius());
-				izmena.getTxtUnos1().setText(""+d.getInnerRadius());
+				izmena.getTxtX().setText("" + d.getCenter().getX());
+				izmena.getTxtY().setText("" + d.getCenter().getY());
+				izmena.getTxtUnos().setText("" + d.getRadius());
+				izmena.getTxtUnos1().setText("" + d.getInnerRadius());
 				izmena.pack();
 				izmena.setVisible(true);
 				if (izmena.isOK()) {
@@ -331,27 +336,27 @@ public class DrawingApp extends JFrame {
 					korY = Integer.parseInt(izmena.getTxtY().getText());
 					x1 = Integer.parseInt(izmena.getTxtUnos().getText());
 					y1 = Integer.parseInt(izmena.getTxtUnos1().getText());
-					d = new Donut(new Point(korX,korY),x1,y1);
+					d = new Donut(new Point(korX, korY), x1, y1);
 					d.setColor(izmena.getC());
 					panelCrtanje.getShapes().set(panelCrtanje.getShapes().indexOf(selected), d);
 				}
 			} else if (selected instanceof Circle) {
 				Circle c = (Circle) selected;
 				DlgIzmenaKrug izmena = new DlgIzmenaKrug();
-				izmena.getTxtX().setText(""+c.getCenter().getX());
-				izmena.getTxtY().setText(""+c.getCenter().getY());
-				izmena.getTxtPoluprecnik().setText(""+c.getRadius());
+				izmena.getTxtX().setText("" + c.getCenter().getX());
+				izmena.getTxtY().setText("" + c.getCenter().getY());
+				izmena.getTxtPoluprecnik().setText("" + c.getRadius());
 				izmena.pack();
 				izmena.setVisible(true);
 				if (izmena.isOK()) {
 					korX = Integer.parseInt(izmena.getTxtX().getText());
 					korY = Integer.parseInt(izmena.getTxtY().getText());
 					x1 = Integer.parseInt(izmena.getTxtPoluprecnik().getText());
-					c = new Circle(new Point(korX,korY),x1);
+					c = new Circle(new Point(korX, korY), x1);
 					c.setColor(izmena.getC());
 					panelCrtanje.getShapes().set(panelCrtanje.getShapes().indexOf(selected), c);
 				}
-			} 
+			}
 		}
 		panelCrtanje.repaint();
 		panelCrtanje.setSelected(null);
