@@ -18,7 +18,7 @@ public class PnlDrawing extends JPanel {
 	private ArrayList<Shape> shapes = new ArrayList<Shape>();
 	private Point startPoint;
 	private Shape selected;
-	
+
 	public PnlDrawing(DrawingApp frame) {
 		this.frame = frame;
 		addMouseListener(new MouseAdapter() {
@@ -48,17 +48,29 @@ public class PnlDrawing extends JPanel {
 				selected.setSelected(true);
 			}
 		} else if (frame.getTglbtnTacka().isSelected()) {
-			Point p = new Point(e.getX(),e.getY(),false);
-			p.setColor(Color.BLACK);
-			newShape = p;
+			DlgUnosTackaLinija unos = new DlgUnosTackaLinija();
+			unos.setTitle("Tacka");
+			unos.pack();
+			unos.setVisible(true);
+			if (unos.isOK()) {
+				Point p = new Point(e.getX(), e.getY(), false);
+				p.setColor(unos.getC());
+				newShape = p;
+			}
 		} else if (frame.getTglbtnLinija().isSelected()) {
+			DlgUnosTackaLinija unos = new DlgUnosTackaLinija();
 			if (startPoint == null) {
 				startPoint = new Point(e.getX(), e.getY());
 			} else {
 				Point endPoint = new Point(e.getX(), e.getY());
-				Line l = new Line(startPoint,endPoint,false);
-				l.setColor(Color.BLACK);
-				newShape = l;
+				unos.setTitle("Linija");
+				unos.pack();
+				unos.setVisible(true);
+				if (unos.isOK()) {
+					Line l = new Line(startPoint, endPoint, false);
+					l.setColor(unos.getC());
+					newShape = l;
+				}
 				startPoint = null;
 			}
 		} else if (frame.getTglbtnPravougaonik().isSelected()) {
@@ -70,8 +82,9 @@ public class PnlDrawing extends JPanel {
 				x1 = Integer.parseInt(unos.getTxtUnos().getText());
 				y1 = Integer.parseInt(unos.getTxtUnos1().getText());
 			}
-			Rectangle r = new Rectangle(new Point(e.getX(), e.getY()), y1, x1,false);
-			r.setColor(Color.BLACK);
+			Rectangle r = new Rectangle(new Point(e.getX(), e.getY()), y1, x1, false);
+			r.setColor(unos.getC());
+			r.setColorUnutrasnjost(unos.getColorUnutrasnjost());
 			try {
 				newShape = r;
 			} catch (Exception ex) {
@@ -84,8 +97,9 @@ public class PnlDrawing extends JPanel {
 			if (unos.isOK()) {
 				x1 = Integer.parseInt(unos.getTxtPoluprecnik().getText());
 			}
-			Circle c = new Circle(new Point(e.getX(), e.getY()), x1,false);
-			c.setColor(Color.BLACK);
+			Circle c = new Circle(new Point(e.getX(), e.getY()), x1, false);
+			c.setColor(unos.getC());
+			c.setColorUnutrasnjost(unos.getColorUnutrasnjost());
 			try {
 				newShape = c;
 			} catch (Exception ex) {
@@ -96,14 +110,23 @@ public class PnlDrawing extends JPanel {
 			unos.getLblUnesite().setText("Unesite poluprecnik spoljasnjeg kruga:");
 			unos.getLblUnesite1().setText("Unesite poluprecnik unutrasnjeg kruga:");
 			unos.setTitle("Krug sa rupom");
+			unos.getLblIzaberiteBoju().setText("Izaberite boju ivice spoljasnjeg kruga:");
+			unos.getLblIzaberiteBojuUnutrasnjosti().setText("Izabetite boju sposljasnjeg kruga:");
+			unos.getLblIzaberiteBojuUnutrasnjeg().setVisible(true);
+			unos.getLblIzaberiteBojuIvice().setVisible(true);
+			unos.getBtnBojaIviceUnutrasnji().setVisible(true);
+			unos.getBtnBojaUnutrasnjiKrug().setVisible(true);
 			unos.pack();
 			unos.setVisible(true);
 			if (unos.isOK()) {
 				x1 = Integer.parseInt(unos.getTxtUnos().getText());
 				y1 = Integer.parseInt(unos.getTxtUnos1().getText());
 			}
-			Donut d = new Donut(new Point(e.getX(), e.getY()), x1, y1,false);
-			d.setColor(Color.BLACK);
+			Donut d = new Donut(new Point(e.getX(), e.getY()), x1, y1, false);
+			d.setColor(unos.getC());
+			d.setColorIviceMali(unos.getColorIviceUnutrasnjiKrug());
+			d.setColorUnutrasnostMali(unos.getColorUnutrasnjiKrugBoja());
+			d.setColorUnutrasnjostVeliki(unos.getColorUnutrasnjost());
 			try {
 				newShape = d;
 			} catch (Exception ex) {
@@ -127,7 +150,7 @@ public class PnlDrawing extends JPanel {
 	public Shape getSelected() {
 		return selected;
 	}
-	
+
 	public void setSelected(Shape selected) {
 		this.selected = selected;
 	}

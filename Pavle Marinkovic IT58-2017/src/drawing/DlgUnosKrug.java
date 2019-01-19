@@ -1,9 +1,11 @@
 package drawing;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -24,7 +26,24 @@ public class DlgUnosKrug extends JDialog {
 
 	private boolean isOK;
 	
+	private Color c;
+	private Color colorUnutrasnjost;
 	
+	public Color getColorUnutrasnjost() {
+		return colorUnutrasnjost;
+	}
+
+	public void setColorUnutrasnjost(Color colorUnutrasnjost) {
+		this.colorUnutrasnjost = colorUnutrasnjost;
+	}
+
+	public Color getC() {
+		return c;
+	}
+
+	public void setC(Color c) {
+		this.c = c;
+	}
 	
 	public JTextField getTxtPoluprecnik() {
 		return txtPoluprecnik;
@@ -61,14 +80,14 @@ public class DlgUnosKrug extends JDialog {
 	public DlgUnosKrug() {
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setTitle("Krug");
-		setBounds(100, 100, 246, 141);
+		setBounds(100, 100, 286, 164);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(new MigLayout("", "[][grow]", "[]"));
+		contentPanel.setLayout(new MigLayout("", "[][grow]", "[][25][25]"));
 		{
 			JLabel lblPoluprecnik = new JLabel("Unesite poluprecnik:");
-			contentPanel.add(lblPoluprecnik, "cell 0 0,alignx trailing");
+			contentPanel.add(lblPoluprecnik, "cell 0 0,alignx left");
 		}
 		{
 			txtPoluprecnik = new JTextField();
@@ -85,8 +104,34 @@ public class DlgUnosKrug extends JDialog {
 					}
 				}
 			});
-			contentPanel.add(txtPoluprecnik, "cell 1 0,alignx left");
+			contentPanel.add(txtPoluprecnik, "cell 1 0,growx");
 			txtPoluprecnik.setColumns(10);
+		}
+		{
+			JLabel lblIzberiteBoju = new JLabel("Izberite boju ivica:");
+			contentPanel.add(lblIzberiteBoju, "cell 0 1");
+		}
+		{
+			JButton btnBoja = new JButton("Boja");
+			btnBoja.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					c = JColorChooser.showDialog(null, "Izaberite boju", Color.RED);
+				}
+			});
+			contentPanel.add(btnBoja, "cell 1 1,growx");
+		}
+		{
+			JLabel lblIzaberiteBojuUnutrasnjosti = new JLabel("Izaberite boju unutrasnjosti:");
+			contentPanel.add(lblIzaberiteBojuUnutrasnjosti, "cell 0 2");
+		}
+		{
+			JButton btnBojaUnutrasnj = new JButton("Boja");
+			btnBojaUnutrasnj.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					colorUnutrasnjost = JColorChooser.showDialog(null, "Izaberite boju unutrasnjosti", Color.RED);
+				}
+			});
+			contentPanel.add(btnBojaUnutrasnj, "cell 1 2,growx");
 		}
 		{
 			JPanel buttonPane = new JPanel();

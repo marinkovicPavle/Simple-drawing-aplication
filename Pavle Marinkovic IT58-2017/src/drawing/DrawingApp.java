@@ -101,7 +101,7 @@ public class DrawingApp extends JFrame {
 	public DrawingApp() {
 		setTitle("Drawing - Marinkovic Pavle IT58/2017");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 515, 300);
+		setBounds(100, 100, 650, 465);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -255,7 +255,10 @@ public class DrawingApp extends JFrame {
 			if (selectedOption == JOptionPane.YES_OPTION) {
 				panelCrtanje.getShapes().remove(selected);
 			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Niste izabrali ni jedan objekat!","Greska", JOptionPane.WARNING_MESSAGE);
 		}
+		panelCrtanje.setSelected(null);
 		panelCrtanje.repaint();
 	}
 
@@ -289,6 +292,8 @@ public class DrawingApp extends JFrame {
 				izmena.getTxtY().setText("" + l.getStartPoint().getY());
 				izmena.getTxtUnos().setText("" + l.getEndPoint().getX());
 				izmena.getTxtUnos1().setText("" + l.getEndPoint().getY());
+				izmena.getLblIzaberiteBojuUnutrasnjosti().setVisible(false);
+				izmena.getBtnBojaUnutrasnjosti().setVisible(false);
 				izmena.pack();
 				izmena.setVisible(true);
 				if (izmena.isOK()) {
@@ -317,6 +322,7 @@ public class DrawingApp extends JFrame {
 					y1 = Integer.parseInt(izmena.getTxtUnos1().getText());
 					r = new Rectangle(new Point(korX, korY), x1, y1);
 					r.setColor(izmena.getC());
+					r.setColorUnutrasnjost(izmena.getColorUnutrasnjost());
 					panelCrtanje.getShapes().set(panelCrtanje.getShapes().indexOf(selected), r);
 				}
 			} else if (selected instanceof Donut) {
@@ -325,6 +331,12 @@ public class DrawingApp extends JFrame {
 				izmena.getLblUnesite().setText("Unesite poluprecnik spoljasnjeg kruga:");
 				izmena.getLblUnesite1().setText("Unesite poluprecnik unutrasnjeg kruga:");
 				izmena.setTitle("Krug sa rupom");
+				izmena.getLblIzaberiteBoju().setText("Izaberite boju ivica spoljasnjeg kruga:");
+				izmena.getLblIzaberiteBojuUnutrasnjosti().setText("Izaberite boju spoljasnjeg kruga:");
+				izmena.getLblIzaberiteBojuIvice().setVisible(true);
+				izmena.getLblIzaberiteBojuUnutrasnjeg().setVisible(true);
+				izmena.getBtnBojaIviceUnutrasnjegKruga().setVisible(true);
+				izmena.getBtnBojaUnutrasnjegKruga().setVisible(true);
 				izmena.getTxtX().setText("" + d.getCenter().getX());
 				izmena.getTxtY().setText("" + d.getCenter().getY());
 				izmena.getTxtUnos().setText("" + d.getRadius());
@@ -338,6 +350,9 @@ public class DrawingApp extends JFrame {
 					y1 = Integer.parseInt(izmena.getTxtUnos1().getText());
 					d = new Donut(new Point(korX, korY), x1, y1);
 					d.setColor(izmena.getC());
+					d.setColorIviceMali(izmena.getColorIviceUnutrasnjiKrug());
+					d.setColorUnutrasnostMali(izmena.getColorUnutrasnjiKrugBoja());
+					d.setColorUnutrasnjostVeliki(izmena.getColorUnutrasnjost());
 					panelCrtanje.getShapes().set(panelCrtanje.getShapes().indexOf(selected), d);
 				}
 			} else if (selected instanceof Circle) {
@@ -354,9 +369,12 @@ public class DrawingApp extends JFrame {
 					x1 = Integer.parseInt(izmena.getTxtPoluprecnik().getText());
 					c = new Circle(new Point(korX, korY), x1);
 					c.setColor(izmena.getC());
+					c.setColorUnutrasnjost(izmena.getColorUnutrasnjost());
 					panelCrtanje.getShapes().set(panelCrtanje.getShapes().indexOf(selected), c);
 				}
 			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Niste izabrali ni jedan objekat!","Greska", JOptionPane.WARNING_MESSAGE);
 		}
 		panelCrtanje.repaint();
 		panelCrtanje.setSelected(null);

@@ -28,6 +28,15 @@ public class DlgIzmenaKrug extends JDialog {
 	private boolean isOK;
 
 	private Color c;
+	private Color colorUnutrasnjost;
+	
+	public Color getColorUnutrasnjost() {
+		return colorUnutrasnjost;
+	}
+
+	public void setColorUnutrasnjost(Color colorUnutrasnjost) {
+		this.colorUnutrasnjost = colorUnutrasnjost;
+	}
 	
 	public Color getC() {
 		return c;
@@ -89,11 +98,11 @@ public class DlgIzmenaKrug extends JDialog {
 	public DlgIzmenaKrug() {
 		setTitle("Krug");
 		setModalityType(ModalityType.APPLICATION_MODAL);
-		setBounds(100, 100, 366, 195);
+		setBounds(100, 100, 376, 214);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(new MigLayout("", "[68px][235px]", "[20px][20px][20px][25]"));
+		contentPanel.setLayout(new MigLayout("", "[68px][235px]", "[20px][20px][20px][25][25]"));
 		
 		JLabel label = new JLabel("X:");
 		contentPanel.add(label, "cell 0 0,alignx center,aligny center");
@@ -155,7 +164,7 @@ public class DlgIzmenaKrug extends JDialog {
 		txtPoluprecnik.setColumns(10);
 		contentPanel.add(txtPoluprecnik, "cell 1 2,growx,aligny top");
 		
-		JLabel lblIzaberiteBoju = new JLabel("Izaberite boju:");
+		JLabel lblIzaberiteBoju = new JLabel("Izaberite boju ivica:");
 		contentPanel.add(lblIzaberiteBoju, "cell 0 3");
 		
 		JButton btnBoja = new JButton("Boja");
@@ -165,6 +174,17 @@ public class DlgIzmenaKrug extends JDialog {
 			}
 		});
 		contentPanel.add(btnBoja, "cell 1 3,growx");
+		
+		JLabel lblIzaberiteBojuUnutrasnjosti = new JLabel("Izaberite boju unutrasnjosti:");
+		contentPanel.add(lblIzaberiteBojuUnutrasnjosti, "cell 0 4");
+		
+		JButton btnBoja_1 = new JButton("Boja");
+		btnBoja_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				colorUnutrasnjost = JColorChooser.showDialog(null, "Izaberite boju unutrasnjosti", Color.RED);
+			}
+		});
+		contentPanel.add(btnBoja_1, "cell 1 4,growx");
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));

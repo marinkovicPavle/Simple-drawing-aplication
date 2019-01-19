@@ -7,6 +7,9 @@ public class Donut extends Circle {
 
 	private int innerRadius;
 	private Color color;
+	private Color colorUnutrasnjostVeliki;
+	private Color colorUnutrasnostMali;
+	private Color colorIviceMali;
 	
 	public Donut() {
 		
@@ -23,9 +26,18 @@ public class Donut extends Circle {
 	}
 	
 	public void draw(Graphics g) {
-		super.draw(g);
 		g.setColor(getColor());
+		g.drawOval(this.getCenter().getX() - this.radius, getCenter().getY() - getRadius(), this.getRadius()*2, this.getRadius()*2);
+		
+		g.setColor(getColorUnutrasnjostVeliki());
+		g.fillOval(this.getCenter().getX()+1 - this.radius, getCenter().getY()+1 - getRadius(), (this.getRadius()-1)*2, (this.getRadius()-1)*2);
+		//super.draw(g);
+		
+		g.setColor(getColorIviceMali());
 		g.drawOval(this.getCenter().getX() - this.innerRadius, this.getCenter().getY() - this.getInnerRadius(), this.getInnerRadius()*2, this.innerRadius*2);
+		
+		g.setColor(getColorUnutrasnostMali());
+		g.fillOval(this.getCenter().getX()+1 - this.innerRadius, this.getCenter().getY()+1 - this.getInnerRadius(), (this.getInnerRadius()-1)*2, (this.innerRadius-1)*2);
 		
 		if (isSelected()) {
 			g.drawRect(getCenter().getX() - 3, getCenter().getY() - 3, 6, 6);
@@ -74,6 +86,30 @@ public class Donut extends Circle {
 		}
 	}
 	
+	public Color getColorIviceMali() {
+		return colorIviceMali;
+	}
+
+	public void setColorIviceMali(Color colorIviceMali) {
+		this.colorIviceMali = colorIviceMali;
+	}
+
+	public Color getColorUnutrasnjostVeliki() {
+		return colorUnutrasnjostVeliki;
+	}
+
+	public void setColorUnutrasnjostVeliki(Color colorUnutrasnjostVeliki) {
+		this.colorUnutrasnjostVeliki = colorUnutrasnjostVeliki;
+	}
+
+	public Color getColorUnutrasnostMali() {
+		return colorUnutrasnostMali;
+	}
+
+	public void setColorUnutrasnostMali(Color colorUnutrasnostMali) {
+		this.colorUnutrasnostMali = colorUnutrasnostMali;
+	}
+
 	public Color getColor() {
 		return color;
 	}

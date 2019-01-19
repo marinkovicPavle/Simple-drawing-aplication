@@ -33,9 +33,42 @@ public class DlgIzmena extends JDialog {
 	private boolean isOK;
 	private JLabel lblIzaberiteBoju;
 	private JButton btnBoja;
+	private JLabel lblIzaberiteBojuUnutrasnjosti;
+	private JButton btnBojaUnutrasnjosti;
+	
 	private Color c;
+	private Color colorUnutrasnjost;
+	private Color colorIviceUnutrasnjiKrug;
+	private Color colorUnutrasnjiKrugBoja;
 	
+	private JLabel lblIzaberiteBojuIvice;
+	private JButton btnBojaIviceUnutrasnjegKruga;
+	private JLabel lblIzaberiteBojuUnutrasnjeg;
+	private JButton btnBojaUnutrasnjegKruga;
 	
+	public Color getColorIviceUnutrasnjiKrug() {
+		return colorIviceUnutrasnjiKrug;
+	}
+
+	public void setColorIviceUnutrasnjiKrug(Color colorIviceUnutrasnjiKrug) {
+		this.colorIviceUnutrasnjiKrug = colorIviceUnutrasnjiKrug;
+	}
+
+	public Color getColorUnutrasnjiKrugBoja() {
+		return colorUnutrasnjiKrugBoja;
+	}
+
+	public void setColorUnutrasnjiKrugBoja(Color colorUnutrasnjiKrugBoja) {
+		this.colorUnutrasnjiKrugBoja = colorUnutrasnjiKrugBoja;
+	}
+	
+	public Color getColorUnutrasnjost() {
+		return colorUnutrasnjost;
+	}
+
+	public void setColorUnutrasnjost(Color colorUnutrasnjost) {
+		this.colorUnutrasnjost = colorUnutrasnjost;
+	}
 	
 	public Color getC() {
 		return c;
@@ -118,6 +151,64 @@ public class DlgIzmena extends JDialog {
 	public void setLblUnesite1(JLabel lblUnesite1) {
 		this.lblUnesite1 = lblUnesite1;
 	}
+	
+	public JLabel getLblIzaberiteBojuUnutrasnjosti() {
+		return lblIzaberiteBojuUnutrasnjosti;
+	}
+
+	public void setLblIzaberiteBojuUnutrasnjosti(JLabel lblIzaberiteBojuUnutrasnjosti) {
+		this.lblIzaberiteBojuUnutrasnjosti = lblIzaberiteBojuUnutrasnjosti;
+	}
+
+	public JButton getBtnBojaUnutrasnjosti() {
+		return btnBojaUnutrasnjosti;
+	}
+
+	public void setBtnBojaUnutrasnjosti(JButton btnBojaUnutrasnjosti) {
+		this.btnBojaUnutrasnjosti = btnBojaUnutrasnjosti;
+	}
+
+	public JLabel getLblIzaberiteBoju() {
+		return lblIzaberiteBoju;
+	}
+
+	public void setLblIzaberiteBoju(JLabel lblIzaberiteBoju) {
+		this.lblIzaberiteBoju = lblIzaberiteBoju;
+	}
+
+	public JLabel getLblIzaberiteBojuIvice() {
+		return lblIzaberiteBojuIvice;
+	}
+
+	public void setLblIzaberiteBojuIvice(JLabel lblIzaberiteBojuIvice) {
+		this.lblIzaberiteBojuIvice = lblIzaberiteBojuIvice;
+	}
+
+	public JButton getBtnBojaIviceUnutrasnjegKruga() {
+		return btnBojaIviceUnutrasnjegKruga;
+	}
+
+	public void setBtnBojaIviceUnutrasnjegKruga(JButton btnBojaIviceUnutrasnjegKruga) {
+		this.btnBojaIviceUnutrasnjegKruga = btnBojaIviceUnutrasnjegKruga;
+	}
+
+	public JLabel getLblIzaberiteBojuUnutrasnjeg() {
+		return lblIzaberiteBojuUnutrasnjeg;
+	}
+
+	public void setLblIzaberiteBojuUnutrasnjeg(JLabel lblIzaberiteBojuUnutrasnjeg) {
+		this.lblIzaberiteBojuUnutrasnjeg = lblIzaberiteBojuUnutrasnjeg;
+	}
+
+	public JButton getBtnBojaUnutrasnjegKruga() {
+		return btnBojaUnutrasnjegKruga;
+	}
+
+	public void setBtnBojaUnutrasnjegKruga(JButton btnBojaUnutrasnjegKruga) {
+		this.btnBojaUnutrasnjegKruga = btnBojaUnutrasnjegKruga;
+	}
+	
+	
 
 	/**
 	 * Launch the application.
@@ -137,11 +228,11 @@ public class DlgIzmena extends JDialog {
 	 */
 	public DlgIzmena() {
 		setModalityType(ModalityType.APPLICATION_MODAL);
-		setBounds(100, 100, 366, 220);
+		setBounds(100, 100, 408, 289);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.NORTH);
-		contentPanel.setLayout(new MigLayout("", "[68px][86px,grow][1px][1px]", "[][][20px][][]"));
+		contentPanel.setLayout(new MigLayout("", "[68px][86px,grow][1px][1px]", "[][][20px][][][][][]"));
 		{
 			lblX = new JLabel("X:");
 			contentPanel.add(lblX, "cell 0 0,alignx center");
@@ -231,8 +322,8 @@ public class DlgIzmena extends JDialog {
 			contentPanel.add(txtUnos1, "cell 1 3,growx,aligny top");
 		}
 		{
-			lblIzaberiteBoju = new JLabel("Izaberite boju:");
-			contentPanel.add(lblIzaberiteBoju, "cell 0 4");
+			lblIzaberiteBoju = new JLabel("Izaberite boju ivica:");
+			contentPanel.add(lblIzaberiteBoju, "cell 0 4,alignx center");
 		}
 		{
 			btnBoja = new JButton("Boja");
@@ -242,6 +333,49 @@ public class DlgIzmena extends JDialog {
 				}
 			});
 			contentPanel.add(btnBoja, "cell 1 4,growx");
+		}
+		{
+			lblIzaberiteBojuUnutrasnjosti = new JLabel("Izaberite boju unutrasnjosti:");
+			contentPanel.add(lblIzaberiteBojuUnutrasnjosti, "cell 0 5,alignx center");
+		}
+		{
+			btnBojaUnutrasnjosti = new JButton("Boja");
+			btnBojaUnutrasnjosti.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					colorUnutrasnjost = JColorChooser.showDialog(null, "Izaberite boju unutrasnjosti", Color.RED);
+				}
+			});
+			contentPanel.add(btnBojaUnutrasnjosti, "cell 1 5,growx");
+		}
+		{
+			lblIzaberiteBojuIvice = new JLabel("Izaberite boju ivice unutrasnjeg kuraga:");
+			lblIzaberiteBojuIvice.setVisible(false);
+			contentPanel.add(lblIzaberiteBojuIvice, "cell 0 6");
+		}
+		{
+			btnBojaIviceUnutrasnjegKruga = new JButton("Boja");
+			btnBojaIviceUnutrasnjegKruga.setVisible(false);
+			btnBojaIviceUnutrasnjegKruga.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					colorIviceUnutrasnjiKrug = JColorChooser.showDialog(null, "Izaberite ivice unutrasnjeg kruga", Color.RED);
+				}
+			});
+			contentPanel.add(btnBojaIviceUnutrasnjegKruga, "cell 1 6,growx");
+		}
+		{
+			lblIzaberiteBojuUnutrasnjeg = new JLabel("Izaberite boju unutrasnjeg kruga:");
+			lblIzaberiteBojuUnutrasnjeg.setVisible(false);
+			contentPanel.add(lblIzaberiteBojuUnutrasnjeg, "cell 0 7");
+		}
+		{
+			btnBojaUnutrasnjegKruga = new JButton("Boja");
+			btnBojaUnutrasnjegKruga.setVisible(false);
+			btnBojaUnutrasnjegKruga.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					colorUnutrasnjiKrugBoja = JColorChooser.showDialog(null, "Izaberite boju unutrasnjeg kruga", Color.RED);
+				}
+			});
+			contentPanel.add(btnBojaUnutrasnjegKruga, "cell 1 7,growx");
 		}
 		{
 			JPanel buttonPane = new JPanel();

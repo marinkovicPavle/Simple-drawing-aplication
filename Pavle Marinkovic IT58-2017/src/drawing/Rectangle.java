@@ -9,6 +9,7 @@ public class Rectangle extends Shape {
 	private int width;
 	private int height;
 	private Color color;
+	private Color colorUnutrasnjost;
 	
 	public Rectangle() {
 
@@ -29,6 +30,9 @@ public class Rectangle extends Shape {
 	public void draw(Graphics g) {
 		g.setColor(getColor());
 		g.drawRect(this.getUpperLeftPoint().getX(), this.getUpperLeftPoint().getY(), this.getWidth(), this.height);
+		
+		g.setColor(getColorUnutrasnjost());
+		g.fillRect(getUpperLeftPoint().getX()+1, getUpperLeftPoint().getY()+1, getWidth()-1, getHeight()-1);
 		
 		if (isSelected()) {
 			g.setColor(Color.BLUE);
@@ -89,6 +93,14 @@ public class Rectangle extends Shape {
 		}
 	}
 	
+	public Color getColorUnutrasnjost() {
+		return colorUnutrasnjost;
+	}
+
+	public void setColorUnutrasnjost(Color colorUnutrasnjost) {
+		this.colorUnutrasnjost = colorUnutrasnjost;
+	}
+
 	public Color getColor() {
 		return color;
 	}

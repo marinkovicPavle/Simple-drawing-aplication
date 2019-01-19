@@ -6,8 +6,9 @@ import java.awt.Graphics;
 public class Circle extends Shape {
 
 	private Point center;
-	private int radius;
+	protected int radius;
 	private Color color;
+	private Color colorUnutrasnjost;
 	
 	public Circle() {
 
@@ -27,6 +28,9 @@ public class Circle extends Shape {
 	public void draw(Graphics g) {
 		g.setColor(getColor());
 		g.drawOval(this.getCenter().getX() - this.radius, getCenter().getY() - getRadius(), this.getRadius()*2, this.getRadius()*2);
+		
+		g.setColor(getColorUnutrasnjost());
+		g.fillOval(this.getCenter().getX()+1 - this.radius, getCenter().getY()+1 - getRadius(), (this.getRadius()-1)*2, (this.getRadius()-1)*2);
 		
 		if (isSelected()) {
 			g.drawRect(getCenter().getX() - 3, getCenter().getY() - 3, 6, 6);
@@ -70,6 +74,14 @@ public class Circle extends Shape {
 		} else {
 			return false;
 		}
+	}
+	
+	public Color getColorUnutrasnjost() {
+		return colorUnutrasnjost;
+	}
+
+	public void setColorUnutrasnjost(Color colorUnutrasnjost) {
+		this.colorUnutrasnjost = colorUnutrasnjost;
 	}
 	
 	public Color getColor() {
